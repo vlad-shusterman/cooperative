@@ -34,7 +34,6 @@ public class TestController {
     public ResponseEntity<TestDto> create(@RequestBody TestDto testDto) {
         var test = testConverter.convert(testDto);
         var saved = testService.save(test);
-
         return ResponseEntity.ok(testMapper.toDto(saved));
     }
 }
