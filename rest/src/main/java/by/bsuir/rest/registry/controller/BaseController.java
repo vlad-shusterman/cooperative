@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -62,6 +63,16 @@ public abstract class BaseController<X extends BaseManager<T>, Y, T> {
     )
     public ResponseEntity<List<Y>> get(@PathVariable("page") int page, @PathVariable("limit") int limit) {
         return ResponseEntity.ok(baseManager.findAll(page, limit).stream().map(entityMapper::toDto).collect(Collectors.toList()));
+    }
+
+    @RequestMapping(
+            value = "/batch",
+            method = RequestMethod.POST,
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
+    public ResponseEntity<List<Y>> batchUpdate(@RequestBody Collection<String> ids) {
+        return ResponseEntity.ok(baseManager.find(ids).stream().map(entityMapper::toDto).collect(Collectors.toList()));
     }
 
     @RequestMapping(

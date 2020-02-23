@@ -1,6 +1,5 @@
 package by.bsuir.registry.model;
 
-import com.google.common.collect.ImmutableList;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -11,6 +10,8 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 @Document(collection = "property")
@@ -31,17 +32,17 @@ public class Property {
 
     @Field
     @NotNull
-    private final ImmutableList<PropertyOwner> owners;
+    private final List<PropertyOwner> owners;
 
     @Field
     @NotNull
-    private final ImmutableList<HistoryPropertyOwner> historyOwners;
+    private final List<HistoryPropertyOwner> historyOwners;
 
     private Property(@NotNull String inventoryNumber, @NotNull double square, @NotNull Collection<PropertyOwner> owners, @NotNull Collection<HistoryPropertyOwner> historyOwners) {
         this.inventoryNumber = inventoryNumber;
         this.square = square;
-        this.owners = ImmutableList.copyOf(owners);
-        this.historyOwners = ImmutableList.copyOf(historyOwners);
+        this.owners = List.copyOf(owners);
+        this.historyOwners = List.copyOf(historyOwners);
     }
 
     @PersistenceConstructor
@@ -55,11 +56,11 @@ public class Property {
     }
 
     public Collection<HistoryPropertyOwner> getHistoryOwners() {
-        return historyOwners;
+        return Collections.unmodifiableCollection(historyOwners);
     }
 
     public Collection<PropertyOwner> getOwners() {
-        return owners;
+        return Collections.unmodifiableCollection(owners);
     }
 
     public double getSquare() {

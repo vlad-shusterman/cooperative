@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/vicarious/authority")
+@RequestMapping("/api/vicarious/authority")
 public class VicariousAuthorityController extends BaseController<VicariousAuthorityManager, VicariousAuthorityEntity, VicariousAuthority> {
 
     protected VicariousAuthorityController(VicariousAuthorityManager baseManager, EntityMapper<VicariousAuthorityEntity, VicariousAuthority> entityMapper) {
@@ -24,7 +24,7 @@ public class VicariousAuthorityController extends BaseController<VicariousAuthor
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Collection<VicariousAuthorityEntity>> byPersonId(@PathVariable("id") String personId, @RequestParam("active") boolean active) {
+    public ResponseEntity<Collection<VicariousAuthorityEntity>> byPersonId(@PathVariable("id") String personId, @RequestParam(value = "active", defaultValue = "false") boolean active) {
         if (active) {
             return ResponseEntity.ok(baseManager.findActiveByPersonId(personId).stream().map(entityMapper::toDto).collect(Collectors.toList()));
         } else {
@@ -37,7 +37,7 @@ public class VicariousAuthorityController extends BaseController<VicariousAuthor
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Collection<VicariousAuthorityEntity>> ByProprietorId(@PathVariable("id") String proprietorId, @RequestParam("active") boolean active) {
+    public ResponseEntity<Collection<VicariousAuthorityEntity>> ByProprietorId(@PathVariable("id") String proprietorId, @RequestParam(value = "active", defaultValue = "false") boolean active) {
         if (active) {
             return ResponseEntity.ok(baseManager.findActiveByProprietorId(proprietorId).stream().map(entityMapper::toDto).collect(Collectors.toList()));
         } else {

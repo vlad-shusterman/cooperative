@@ -14,6 +14,8 @@ public interface BaseManager<T> {
     @Nullable
     T find(String id) throws DataManipulateException;
 
+    Collection<T> find(Collection<String> ids) throws DataManipulateException;
+
     Collection<T> find(Predicate<T> predicate) throws DataManipulateException;
 
     Collection<T> find(Predicate<T> predicate, int page, int limit) throws DataManipulateException;

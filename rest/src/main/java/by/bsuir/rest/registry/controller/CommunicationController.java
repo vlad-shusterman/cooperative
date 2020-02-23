@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -26,7 +27,7 @@ public class CommunicationController extends BaseController<CommunicationManager
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Void> delete(@RequestBody @Validated(value = IDValidationGroup.class) CommunicationEntity communicationEntity) {
+    public ResponseEntity<Void> delete(@RequestBody @Validated(value = IDValidationGroup.class) @Valid CommunicationEntity communicationEntity) {
         baseManager.delete(entityMapper.fromDto(communicationEntity));
         return ResponseEntity.ok().build();
     }
@@ -34,7 +35,6 @@ public class CommunicationController extends BaseController<CommunicationManager
     @RequestMapping(
             method = RequestMethod.GET,
             path = "/person/{id}",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<Collection<CommunicationEntity>> getByPersonId(@PathVariable("id") String personID) {

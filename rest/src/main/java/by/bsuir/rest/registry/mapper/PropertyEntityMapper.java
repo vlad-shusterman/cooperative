@@ -32,7 +32,7 @@ public class PropertyEntityMapper implements EntityMapper<PropertyEntity, Proper
                 dto.getInventoryNumber(),
                 dto.getSquare(),
                 dto.getOwners() == null ? Collections.emptyList() : dto.getOwners().stream().map(ownerEntityMapper::fromDto).collect(Collectors.toList()),
-                dto.getHistoryOwners() == null ? Collections.emptyList() : dto.getHistoryOwners().stream().map(historyOwnerEntityMapper::fromDto).collect(Collectors.toList())
+                Collections.emptyList()
         );
     }
 

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.ImmutableList;
 
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
@@ -17,31 +18,24 @@ public class PropertyEntity {
     private final String id;
     @NotBlank
     private final String inventoryNumber;
-    @NotNull
+    @DecimalMin(value = "0.0", inclusive = false)
     private final double square;
     private final ImmutableList<PropertyOwner> owners;
     private final ImmutableList<HistoryPropertyOwner> historyOwners;
 
-    public PropertyEntity(@NotBlank(groups = IDValidationGroup.class) @Null String id, @NotBlank String inventoryNumber, @NotNull double square, Collection<PropertyOwner> owners, Collection<HistoryPropertyOwner> historyOwners) {
-        this.id = id;
-        this.inventoryNumber = inventoryNumber;
-        this.square = square;
-        this.owners = ImmutableList.copyOf(owners);
-        this.historyOwners = ImmutableList.copyOf(historyOwners);
-    }
-
-    @JsonCreator
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     public PropertyEntity(
-            @JsonProperty("id") @NotBlank(groups = IDValidationGroup.class) @Null String id,
-            @JsonProperty("inventoryNumber") @NotBlank String inventoryNumber,
-            @JsonProperty("square") @NotNull double square,
-            @JsonProperty("owners") Collection<PropertyOwner> owners
+            @NotBlank(groups = IDValidationGroup.class) @Null @JsonProperty("id") String id,
+            @NotBlank @JsonProperty("inventoryNumber") String inventoryNumber,
+            @DecimalMin(value = "0.0", inclusive = false) @JsonProperty("square") double square,
+            @JsonProperty("owners") Collection<PropertyOwner> owners,
+            @JsonProperty(value = "historyOwners") Collection<HistoryPropertyOwner> historyPropertyOwners
     ) {
         this.id = id;
         this.inventoryNumber = inventoryNumber;
         this.square = square;
-        this.owners = ImmutableList.copyOf(owners);
-        this.historyOwners = ImmutableList.of();
+        this.owners = owners == null ? ImmutableList.of() : ImmutableList.copyOf(owners);
+        this.historyOwners = historyPropertyOwners == null ? ImmutableList.of() : ImmutableList.copyOf(historyPropertyOwners);
     }
 
     public String getId() {
@@ -69,14 +63,15 @@ public class PropertyEntity {
         private final String personId;
         @NotNull
         private final long startDate;
-        @NotNull
+        @DecimalMin(value = "0.0", inclusive = false)
+        @DecimalMin(value = "1.0")
         private final double owningPercent;
 
-        @JsonCreator
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         public PropertyOwner(
-                @JsonProperty("personId") @NotBlank String personId,
-                @JsonProperty("startDate") @NotNull long startDate,
-                @JsonProperty("owningPercent") @NotNull double owningPercent
+                @NotBlank @JsonProperty("personId") String personId,
+                @NotNull @JsonProperty("startDate") long startDate,
+                @DecimalMin(value = "0.0", inclusive = false) @DecimalMin(value = "1.0") @JsonProperty("owningPercent") double owningPercent
         ) {
             this.personId = personId;
             this.startDate = startDate;
@@ -99,11 +94,12 @@ public class PropertyEntity {
     public static class HistoryPropertyOwner extends PropertyOwner {
         private final long endDate;
 
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         public HistoryPropertyOwner(
-                String personId,
-                long startDate,
-                double owningPercent,
-                long endDate
+                @JsonProperty("personId") String personId,
+                @JsonProperty("startDate") long startDate,
+                @JsonProperty("owningPercent") double owningPercent,
+                @JsonProperty("endDate") long endDate
         ) {
             super(personId, startDate, owningPercent);
             this.endDate = endDate;

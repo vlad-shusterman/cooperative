@@ -2,6 +2,8 @@ package by.bsuir.registry.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
@@ -10,6 +12,9 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 import javax.validation.constraints.NotNull;
 
 @Document(collection = "person")
+@CompoundIndexes(
+        @CompoundIndex(name = "fio", def = "{'name' : 1, 'surname': 1, 'lastName': 1}", unique = true)
+)
 public class Person {
 
     @Id

@@ -65,7 +65,7 @@ public class VicariousAuthorityManagerImpl extends BaseManagerImpl<VicariousAuth
     private static Collection<VicariousAuthority> filterActive(Collection<VicariousAuthority> byProprietorIdId) {
         ImmutableList.Builder<VicariousAuthority> builder = ImmutableList.builder();
         for (VicariousAuthority vicariousAuthority : byProprietorIdId) {
-            if (vicariousAuthority.getStartDate() + TimeUnit.DAYS.toMillis(vicariousAuthority.getDuration()) > System.currentTimeMillis()) {
+            if (vicariousAuthority.getStartDate() + TimeUnit.DAYS.toSeconds(vicariousAuthority.getDuration()) > TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())) {
                 builder.add(vicariousAuthority);
             }
         }

@@ -26,13 +26,13 @@ public class VicariousAuthorityEntity {
     @NotBlank // To
     private final String personId;
 
-    @JsonCreator
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     public VicariousAuthorityEntity(
-            @JsonProperty("id") @NotBlank(groups = IDValidationGroup.class) @Null String id,
-            @JsonProperty("proprietorId") @NotBlank String proprietorId,
-            @JsonProperty("startDate") @NotBlank long startDate,
-            @JsonProperty("duration") @NotBlank long duration,
-            @JsonProperty("personId") @NotBlank String personId
+            @NotBlank(groups = IDValidationGroup.class) @Null @JsonProperty("id") String id,
+            @NotBlank @JsonProperty("proprietorId") String proprietorId,
+            @NotBlank @JsonProperty("startDate") long startDate,
+            @NotBlank @JsonProperty("duration") long duration,
+            @NotBlank @JsonProperty("personId") String personId
     ) {
         this.id = id;
         this.proprietorId = proprietorId;

@@ -4,6 +4,7 @@ import by.bsuir.registry.exceptions.DataManipulateException;
 import by.bsuir.registry.service.BaseManager;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -25,6 +26,11 @@ public abstract class BaseManagerImpl<Y extends MongoRepository<T, String>, T> i
     @Override
     public T find(String id) throws DataManipulateException {
         return mongoRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Collection<T> find(Collection<String> ids) throws DataManipulateException {
+        return Lists.newArrayList(mongoRepository.findAllById(ids));
     }
 
     @Override
