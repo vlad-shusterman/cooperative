@@ -4,9 +4,9 @@ import by.bsuir.registry.model.Person;
 import by.bsuir.registry.model.Property;
 import by.bsuir.registry.service.PersonManager;
 import by.bsuir.registry.service.PropertyManager;
-import by.bsuir.rest.mapper.EntityMapper;
+import by.bsuir.rest.common.mapper.EntityMapper;
+import by.bsuir.rest.registry.mapper.PersonMapper;
 import by.bsuir.rest.registry.model.OwnersEntity;
-import by.bsuir.rest.registry.model.PersonEntity;
 import by.bsuir.rest.registry.model.PropertyEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,13 +22,13 @@ public class OwnersController {
 
     private final PersonManager personManager;
     private final PropertyManager propertyManager;
-    private final EntityMapper<PersonEntity, Person> personEntityMapper;
+    private final PersonMapper personEntityMapper;
     private final EntityMapper<PropertyEntity, Property> propertyEntityMapper;
 
     public OwnersController(
             PersonManager personManager,
             PropertyManager propertyManager,
-            EntityMapper<PersonEntity, Person> personEntityMapper,
+            PersonMapper personEntityMapper,
             EntityMapper<PropertyEntity, Property> propertyEntityMapper
     ) {
         this.personManager = personManager;

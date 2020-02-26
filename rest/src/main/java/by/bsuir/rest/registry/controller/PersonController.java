@@ -2,7 +2,7 @@ package by.bsuir.rest.registry.controller;
 
 import by.bsuir.registry.model.Person;
 import by.bsuir.registry.service.PersonManager;
-import by.bsuir.rest.mapper.EntityMapper;
+import by.bsuir.rest.common.mapper.EntityMapper;
 import by.bsuir.rest.registry.model.PersonEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

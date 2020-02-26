@@ -1,7 +1,7 @@
 package by.bsuir.rest.registry.mapper;
 
 import by.bsuir.registry.model.Property;
-import by.bsuir.rest.mapper.EntityMapper;
+import by.bsuir.rest.common.mapper.EntityMapper;
 import by.bsuir.rest.registry.model.PropertyEntity;
 import org.springframework.stereotype.Service;
 
@@ -81,5 +81,4 @@ public class PropertyEntityMapper implements EntityMapper<PropertyEntity, Proper
         }
 
     }
-
 }

@@ -1,5 +1,6 @@
 package by.bsuir.registry.model;
 
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
@@ -12,6 +13,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.validation.constraints.NotNull;
 
+@Data
 @Document(collection = "communication")
 @ParametersAreNonnullByDefault
 @CompoundIndexes(
@@ -25,43 +27,14 @@ public class Communication {
 
     @Field
     @NotNull
-    private final String personId;
+    private String personId;
 
     // Enum?
     @Field
     @NotNull
-    private final String communicationType;
+    private String communicationType;
 
     @Field
     @NotNull
-    private final String communicationValue;
-
-    @PersistenceConstructor
-    public Communication(String id, String personId, String communicationType, String communicationValue) {
-        this(personId, communicationType, communicationValue);
-        this.id = id;
-    }
-
-    private Communication(String personId, String communicationType, String communicationValue) {
-        this.personId = personId;
-        this.communicationType = communicationType;
-        this.communicationValue = communicationValue;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getCommunicationType() {
-        return communicationType;
-    }
-
-    public String getCommunicationValue() {
-        return communicationValue;
-    }
-
-    public String getPersonId() {
-        return personId;
-    }
-
+    private String communicationValue;
 }
