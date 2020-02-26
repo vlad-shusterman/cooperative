@@ -2,7 +2,7 @@ package by.bsuir.rest.registry.controller;
 
 import by.bsuir.registry.model.VicariousAuthority;
 import by.bsuir.registry.service.VicariousAuthorityManager;
-import by.bsuir.rest.mapper.EntityMapper;
+import by.bsuir.rest.common.mapper.EntityMapper;
 import by.bsuir.rest.registry.model.VicariousAuthorityEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication(scanBasePackages = {"by.bsuir"})
-@EnableMongoRepositories(basePackages = "by.bsuir")
+@EnableMongoRepositories(basePackages = {"by.bsuir"})
 @EnableSwagger2 // {@link http://localhost:8080/swagger-ui.html}
 public class Application {
 
