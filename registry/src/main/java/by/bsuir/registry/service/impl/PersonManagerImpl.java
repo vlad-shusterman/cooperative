@@ -24,4 +24,9 @@ public class PersonManagerImpl extends BaseManagerImpl<PersonRepository, Person>
         throw new DataManipulateException();
     }
 
+    @Override
+    public String getFullName(Person person) {
+        return person.getLastName() + person.getName() + person.getSurname();
+    }
+
 }

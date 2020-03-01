@@ -14,6 +14,7 @@
         <module>rest</module>
         <module>notification</module>
         <module>registry</module>
+        <module>document</module>
         <module>energy-resource</module>
     </modules>
 
