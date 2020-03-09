@@ -1,0 +1,6 @@
+by\bsuir\repository\ContractorRepository.class
+by\bsuir\model\entity\contractor\Authority.class
+by\bsuir\repository\AuthorityRepository.class
+by\bsuir\model\common\Exportable.class
+by\bsuir\model\entity\contractor\Contractor.class
+by\bsuir\model\entity\contractor\ContractorType.class
