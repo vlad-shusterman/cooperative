@@ -1,8 +1,0 @@
-by\bsuir\repository\WaterMeterRepository.class
-by\bsuir\model\entity\meter\WaterMeter.class
-by\bsuir\repository\ElectricMeterRepository.class
-by\bsuir\model\entity\meter\ElectricMeter.class
-by\bsuir\model\entity\meter\WaterMeterType.class
-by\bsuir\repository\HeatMeterRepository.class
-by\bsuir\model\entity\meter\HeatMeter.class
-by\bsuir\model\common\Exportable.class
