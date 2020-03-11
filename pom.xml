@@ -17,6 +17,7 @@
         <module>document</module>
         <module>energy-resource</module>
         <module>core</module>
+        <module>contractor</module>
     </modules>
 
     <parent>
