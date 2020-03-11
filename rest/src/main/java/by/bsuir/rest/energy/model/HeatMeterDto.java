@@ -11,11 +11,9 @@ import java.time.LocalDate;
 public class HeatMeterDto {
 
     private String id;
-    private Double value;
     @NotBlank
-    private String number;
     @NotNull
-    private LocalDate readingDate;
+    private String number;
     @NotNull
     private PersonEntity person;
 }

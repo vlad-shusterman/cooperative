@@ -1,18 +1,16 @@
 package by.bsuir.rest.energy.model;
 
-import lombok.AccessLevel;
+import by.bsuir.rest.registry.model.PersonEntity;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
-import lombok.experimental.FieldDefaults;
-
-import java.util.List;
 
 @Data
-@Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class EnergyMeterDto {
 
-    List<ElectricMeterDto> electricMeters;
-    List<HeatMeterDto> heatMeters;
-    List<WaterMeterDto> waterMeters;
+    private ElectricInfoDto electricInfo;
+    private HeatInfoDto heatInfo;
+    private WaterInfoDto waterInfo;
+    private PersonEntity person;
 }

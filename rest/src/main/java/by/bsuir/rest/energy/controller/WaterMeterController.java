@@ -33,14 +33,6 @@ public class WaterMeterController {
         return new PageImpl<>(waterMeters);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<WaterMeterDto> getById(@PathVariable("id") String id) {
-        var waterMeter = waterMeterRepository.findById(id)
-                .map(waterMeterMapper::toDto)
-                .orElseThrow(EntityNotFoundException::new);
-        return ResponseEntity.ok(waterMeter);
-    }
-
     @GetMapping("/person/{id}")
     public Page<WaterMeterDto> getByPersonId(@PageableDefault(size = 15) Pageable pageable,
                                              @PathVariable("id") String id) {
@@ -54,16 +46,6 @@ public class WaterMeterController {
     @PostMapping
     public ResponseEntity<WaterMeterDto> save(@RequestBody WaterMeterDto waterMeterDTO) {
         waterMeterDTO.setId(null);
-        var entity = waterMeterMapper.fromDto(waterMeterDTO);
-        var savedWaterMeter = waterMeterRepository.save(entity);
-
-        return ResponseEntity.ok(waterMeterMapper.toDto(savedWaterMeter));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<WaterMeterDto> update(@PathVariable("id") String id,
-                                                @RequestBody WaterMeterDto waterMeterDTO) {
-        waterMeterDTO.setId(id);
         var entity = waterMeterMapper.fromDto(waterMeterDTO);
         var savedWaterMeter = waterMeterRepository.save(entity);
 
