@@ -16,6 +16,7 @@
         <module>registry</module>
         <module>document</module>
         <module>energy-resource</module>
+        <module>core</module>
     </modules>
 
     <parent>

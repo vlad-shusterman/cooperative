@@ -1,22 +1,27 @@
 package by.bsuir.document;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class DocumentUtils {
-    private static final String TEMPLATES_PATH = "data/templates";
-    private static final String DOCUMENTS_PATH = "data/documents";
+    @Value("${templates.path}")
+    private static String templatesPath;
+
+    @Value("${documents.path}")
+    private static String documentsPath;
 
     public static void createDirs(String path) throws IOException {
         Files.createDirectories(Paths.get(path).getParent());
     }
 
     public static String getDocumentsPath(String path) {
-        return DOCUMENTS_PATH + "/" + path;
+        return documentsPath + "/" + path;
     }
 
     public static String getTemplate(String templateName) {
-        return TEMPLATES_PATH + "/" + templateName;
+        return templatesPath + "/" + templateName;
     }
 }

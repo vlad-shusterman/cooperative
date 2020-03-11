@@ -1,6 +1,7 @@
 package by.bsuir.registry.service;
 
-import by.bsuir.registry.exceptions.DataManipulateException;
+import by.bsuir.core.exceptions.DataManipulateException;
+import by.bsuir.core.service.BaseManager;
 import by.bsuir.registry.model.Person;
 
 import javax.annotation.ParametersAreNonnullByDefault;

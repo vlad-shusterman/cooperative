@@ -1,10 +1,11 @@
 package by.bsuir.registry.service.impl;
 
-import by.bsuir.registry.exceptions.DataManipulateException;
+import by.bsuir.core.exceptions.DataManipulateException;
+import by.bsuir.core.service.impl.BaseManagerImpl;
 import by.bsuir.registry.model.Person;
 import by.bsuir.registry.model.VicariousAuthority;
 import by.bsuir.registry.repository.VicariousAuthorityRepository;
-import by.bsuir.registry.service.BaseManager;
+import by.bsuir.core.service.BaseManager;
 import by.bsuir.registry.service.VicariousAuthorityManager;
 import com.google.common.collect.ImmutableList;
 import org.springframework.stereotype.Service;

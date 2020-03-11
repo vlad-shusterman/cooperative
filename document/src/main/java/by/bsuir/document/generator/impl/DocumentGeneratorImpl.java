@@ -25,7 +25,7 @@ public class DocumentGeneratorImpl implements DocumentGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(DocumentGeneratorImpl.class);
 
     @Override
-    public void generateDocument(String templatePath, Map<String, Object> tagValues, String outputPath) {
+    public void generateDocument(String templatePath, String outputPath, Map<String, Object> tagValues) {
         try {
             String fullPath = DocumentUtils.getDocumentsPath(outputPath);
             DocumentUtils.createDirs(fullPath);

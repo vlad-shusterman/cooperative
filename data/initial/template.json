@@ -1,0 +1,101 @@
+[
+  {
+    "name": "Соглашение",
+    "path": "Соглашение_шаблон.docx",
+    "tags": [
+      "IND_DOG",
+      "INDEX",
+      "ORG_NAME",
+      "ORG_TYPE",
+      "PRESIDENT",
+      "FAMILY",
+      "FIO",
+      "BOX_SQ",
+      "ORG_ADDR"
+    ],
+    "compositeTags": [
+      "CONTRACT_VC",
+      "PROPRIETOR_VC"
+    ]
+  },
+  {
+    "name": "Доверенность",
+    "path": "00 Бланк Доверенности_.docx",
+    "tags": [
+      "ORG_NAME",
+      "PAN",
+      "FAMILY",
+      "FAMILY_TO",
+      "ATP",
+      "PRESIDENT",
+      "AN"
+    ],
+    "compositeTags": [
+    ]
+  },
+  {
+    "name": "Акт приёмки передачи оборудования",
+    "path": "Акт передачи оборудования.docx",
+    "tags": [
+      "DAY",
+      "MONTH",
+      "YEAR",
+      "ORG_NAME",
+      "PRESIDENT",
+      "FAMILY",
+      "FIO",
+      "EQS"
+    ],
+    "compositeTags": [
+      "CONTRACT_VC",
+      "PROPRIETOR_VC"
+    ]
+  },
+  {
+    "name": "Регистрационный лист",
+    "path": "Регистрационный лист.docx",
+    "tags": [
+      "ORG_NAME",
+      "DATE",
+      "LIST"
+    ],
+    "compositeTags": [
+    ]
+  },
+  {
+    "name": "Заявление на дефектный акт",
+    "path": "Заявление_шаблон на деф акт.docx",
+    "tags": [
+      "ORG_NAME",
+      "ORG_ADDR",
+      "PAN",
+      "FAMILY",
+      "ADDRESS",
+      "PN",
+      "CUST_NAME",
+      "CUST_ADDR",
+      "CUST_PAN",
+      "GEN_CONTR_NAME",
+      "GEN_CONTR_ADDR",
+      "GEN_CONTR_PAN",
+      "SUBCONTR_PRESENT",
+      "SUBCONTR_NAME",
+      "SUBCONTR_ADDR",
+      "SUBCONTR_PAN",
+      "ORG_TYPE",
+      "PRESIDENT",
+      "FIO",
+      "UR",
+      "OSAVTO",
+      "NEDS",
+      "INDICT_CONTR_NAME",
+      "INDICT_CONTR_PAN",
+      "ELIMIN_PERIOD",
+      "DAY",
+      "MONTH",
+      "YEAR"
+    ],
+    "compositeTags": [
+    ]
+  }
+]

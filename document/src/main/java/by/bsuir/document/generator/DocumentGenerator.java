@@ -10,10 +10,9 @@ import java.util.Map;
 public interface DocumentGenerator {
     /**
      * Method generate document of configured template with filed values of tags.
-     *
-     * @param templatePath Path to template document
-     * @param tagValues    Values which will replace document tags
+     *  @param templatePath Path to template document
      * @param outputPath   Output file name where generated document will save
+     * @param tagValues    Values which will replace document tags
      */
-    void generateDocument(String templatePath, Map<String, Object> tagValues, String outputPath);
+    void generateDocument(String templatePath, String outputPath, Map<String, Object> tagValues);
 }
