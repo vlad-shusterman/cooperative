@@ -5,18 +5,20 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 
 @Data
 public class OutgoingMailDto {
 
     private String id;
 
-    private LocalDate sendingDate;
+    private Date sendingDate;
 
     @NotNull
     private String index;
 
-    private String topic;
+    private String subject;
 
     private String text;
 
@@ -24,5 +26,5 @@ public class OutgoingMailDto {
     private SendingType sendingType;
 
     @NotNull
-    private String receiver;
+    private List<String> receivers;
 }

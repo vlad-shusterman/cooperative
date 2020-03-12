@@ -3,18 +3,30 @@ package by.bsuir.notification.entity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.mongodb.core.mapping.Field;
 
+import javax.validation.constraints.NotNull;
 import java.io.File;
 import java.util.List;
 
-@Builder
 @Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Mail {
-    List<String> to;
+
+    @NotNull
+    @Field
+    List<String> receivers;
+
+    @NotNull
+    @Field
     String subject;
+
+    @NotNull
+    @Field
     String text;
+
     boolean html;
+
     List<File> attachments;
 }

@@ -5,24 +5,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public class GmailNotificationService implements NotificationService {
 
     @Autowired
     private JavaMailSender javaMailSender;
 
     public void sendEmail(Mail mail) throws MessagingException {
-        String[] to = mail.getTo().toArray(String[]::new);
+        String[] to = mail.getReceivers().toArray(String[]::new);
         String subject = mail.getSubject();
         String text = mail.getText();
         boolean isHtml = mail.isHtml();
-        List<File> attachments = mail.getAttachments();
-        boolean multipart = !attachments.isEmpty();
+        Optional<List<File>> attachments = Optional.ofNullable(mail.getAttachments());
+        boolean multipart = attachments.isPresent();
 
         MimeMessage msg = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(msg, multipart);
@@ -31,10 +35,12 @@ public class GmailNotificationService implements NotificationService {
         helper.setSubject(subject);
         helper.setText(text, isHtml);
 
-        for (File attachment: attachments){
-            FileSystemResource file = new FileSystemResource(attachment);
-            String fileName = attachment.getName();
-            helper.addAttachment(fileName, file);
+        if(attachments.isPresent()) {
+            for (File attachment : attachments.get()) {
+                FileSystemResource file = new FileSystemResource(attachment);
+                String fileName = attachment.getName();
+                helper.addAttachment(fileName, file);
+            }
         }
 
         javaMailSender.send(msg);
