@@ -1,6 +1,7 @@
-package by.bsuir.notification.service;
+package by.bsuir.notification.service.impl;
 
 import by.bsuir.notification.entity.Mail;
+import by.bsuir.notification.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
