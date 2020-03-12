@@ -1,5 +1,6 @@
 package by.bsuir.model.entity;
 
+import by.bsuir.model.common.Exportable;
 import by.bsuir.model.entity.meter.ElectricMeter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 @Data
 @EqualsAndHashCode(of = {"id", "value"})
 @Document(collection = "electric_info")
-public class ElectricInfo {
+public class ElectricInfo implements Exportable {
 
     @Id
     @MongoId(FieldType.OBJECT_ID)

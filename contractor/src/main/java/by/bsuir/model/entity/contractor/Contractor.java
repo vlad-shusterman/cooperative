@@ -1,10 +1,11 @@
 package by.bsuir.model.entity.contractor;
 
-import by.bsuir.model.common.Exportable;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.*;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 @Data
 @Document(collection = "contractor")
 
-public class Contractor implements Exportable{
+public class Contractor {
 
     @Id
     @MongoId(FieldType.OBJECT_ID)

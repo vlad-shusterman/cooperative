@@ -1,5 +1,8 @@
 package by.bsuir.rest.energy.controller;
 
+import by.bsuir.export.service.ExportService;
+import by.bsuir.export.template.ElectricTemplate;
+import by.bsuir.model.entity.ElectricInfo;
 import by.bsuir.registry.repository.PersonRepository;
 import by.bsuir.repository.*;
 import by.bsuir.rest.common.exception.EntityNotFoundException;
@@ -12,6 +15,7 @@ import by.bsuir.rest.energy.model.HeatInfoDto;
 import by.bsuir.rest.energy.model.WaterInfoDto;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +44,10 @@ public class EnergyMeterController {
     private final HeatMeterRepository heatMeterRepository;
     private final HeatInfoRepository heatInfoRepository;
     private final PersonRepository personRepository;
+
+    private final ExportService<ElectricInfo> electricInfoExportService;
+
+    private final ElectricTemplate electricTemplate;
 
     @PostMapping
     public ResponseEntity<EnergyMeterDto> save(@RequestBody @Valid EnergyMeterDto energyMeter) {
@@ -101,5 +109,14 @@ public class EnergyMeterController {
                 .map(heatInfoMapper::toDto)
                 .collect(Collectors.toList());
         return new PageImpl<>(electricMeters);
+    }
+
+    @GetMapping("/electric/export")
+    public ResponseEntity<ByteArrayResource> exportToExcel() {
+        var electricInfos = electricInfoRepository.findAll();
+        var response = electricInfoExportService.exportEntities(electricTemplate, electricInfos);
+        return ResponseEntity.ok()
+                .headers(response.getHeaders())
+                .body(response.getStream());
     }
 }
