@@ -23,14 +23,6 @@ public class TemplateManagerImpl extends CrudManagerImpl<TemplateRepository, Tem
     }
 
     @Override
-    public Template update(Template template) throws DataManipulateException {
-        if (mongoRepository.findById(template.getId()).isPresent()) {
-            return mongoRepository.save(template);
-        }
-        throw new DataManipulateException();
-    }
-
-    @Override
     public Template findByName(String name) {
         Template template = new Template();
         template.setName(name);

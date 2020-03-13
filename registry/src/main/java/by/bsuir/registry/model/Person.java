@@ -37,6 +37,10 @@ public class Person {
     @Field
     private PassportData passportData;
 
+    // TODO: 12.03.2020
+    //  - Add living address
+    //  - Fix frontend
+
     @Data
     public static class PassportData {
 

@@ -11,12 +11,12 @@ import java.util.Map;
 import static by.bsuir.document.model.template.Tag.Param.PERSON_ID;
 
 /**
- * {@link TagProcessor} of {@link Tag#PN}.
+ * {@link TagProcessor} of {@link Tag#PW}.
  *
  * @author Vladislav Novitskiy
  */
 @AllArgsConstructor
-public class PnProcessor implements TagProcessor {
+public class PwProcessor implements TagProcessor {
     private PersonManager personManager;
 
     @Override
@@ -24,6 +24,6 @@ public class PnProcessor implements TagProcessor {
         String ownerId = paramValues.get(PERSON_ID);
         Person person = personManager.findOrThrow(ownerId);
         Person.PassportData passportData = person.getPassportData();
-        return passportData.getPersonalNumber();
+        return passportData.getIssuingAuthority();
     }
 }
