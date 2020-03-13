@@ -1,8 +1,13 @@
 import React from 'react';
-import {Route, Router} from 'react-router';
-import createBrowserHistory from './helpers/history';
+import { Switch, Route, BrowserRouter } from 'react-router-dom'
 import './App.css';
+import {Requisites} from "./components/requisites/Requisities";
 import {Register} from "./components/register/Register";
+import 'bootstrap/dist/css/bootstrap.css';
+import CommonNavbar from './common/Navbar';
+import EnergyTableContainer from './energyResources/energyTableContainer.js';
+import NewMeter from './energyResources/newMeter/newMeter.js'
+import NewRecord from './energyResources/newRecord.js';
 import MailSender from "./components/notifications/components/MailSender";
 import {Organization} from "./components/requisites/Organization";
 import {Supervisor} from "./components/requisites/Supervisor";
@@ -11,17 +16,23 @@ import {SubjectHistory} from "./components/requisites/SubjectHistory";
 import {SubjectHistoryEvent} from "./components/requisites/SubjectHistoryEvent";
 
 function App() {
-    return (
-        <Router history={createBrowserHistory}>
-            <Route exact path='/requisites' component={Organization}/>
-            <Route exact path='/requisites/supervisor' component={Supervisor}/>
-            <Route exact path='/requisites/stateRegistrationOfLegal' component={StateRegistrationOfLegal}/>
-            <Route exact path='/requisites/subjectHistory' component={SubjectHistory}/>
-            <Route exact path='/requisites/subjectHistory/:id' component={SubjectHistoryEvent}/>
+  return (
+    <BrowserRouter>
+      <CommonNavbar/>
+      <Switch>
+            <Route path='/requisites' component={Requisites}/>
             <Route path='/register' component={Register}/>
-            <Route path='/notifications' component={MailSender}/>
-        </Router>
-    );
+            <Route exact path='/' component={EnergyTableContainer}/>
+            <Route exact path='/meters/new' component={NewMeter}/>
+            <Route exact path='/meters/update' component={NewRecord}/>
+    <Route exact path='/requisites/supervisor' component={Supervisor}/>
+    <Route exact path='/requisites/stateRegistrationOfLegal' component={StateRegistrationOfLegal}/>
+    <Route exact path='/requisites/subjectHistory' component={SubjectHistory}/>
+    <Route exact path='/requisites/subjectHistory/:id' component={SubjectHistoryEvent}/>
+    <Route path='/notifications' component={MailSender}/>
+    </Switch>
+      </BrowserRouter>
+  );
 }
 
 export default App;
