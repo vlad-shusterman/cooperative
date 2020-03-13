@@ -1,5 +1,6 @@
 package by.bsuir.document.service.document.impl;
 
+import by.bsuir.core.exceptions.DataManipulateException;
 import by.bsuir.document.generator.DocumentGenerator;
 import by.bsuir.document.model.template.CompositeTag;
 import by.bsuir.document.model.template.Tag;
@@ -48,7 +49,7 @@ public class PhysicalDocumentServiceImpl implements PhysicalDocumentService {
                         tagValues.put(innerTagName, innerTagValue);
                         return innerTagValue;
                     })
-                    .reduce((res, cur) -> res + "\n" + cur).orElseThrow();
+                    .reduce((res, cur) -> res + "\n" + cur).orElseThrow(DataManipulateException::new);
             tagValues.put(compositeTag.getId(), compositeTagValue);
         }
 

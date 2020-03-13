@@ -1,4 +1,4 @@
-import api from '../services/api'
+import api from '../../../api/api'
 
 export default {
   fetchOwners() {
@@ -8,4 +8,5 @@ export default {
   fetchOwnerCommunications(personID) {
     return api().get(`communication/person/${personID}`)
   }
+
 }

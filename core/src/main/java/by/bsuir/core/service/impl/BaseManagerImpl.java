@@ -29,6 +29,11 @@ public abstract class BaseManagerImpl<Y extends MongoRepository<T, String>, T> i
     }
 
     @Override
+    public T findOrThrow(String id) throws DataManipulateException {
+        return mongoRepository.findById(id).orElseThrow(DataManipulateException::new);
+    }
+
+    @Override
     public Collection<T> find(Collection<String> ids) throws DataManipulateException {
         return Lists.newArrayList(mongoRepository.findAllById(ids));
     }

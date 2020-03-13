@@ -24,15 +24,17 @@ public abstract class CrudManagerImpl<Y extends MongoRepository<T, String>, T> e
     public void delete(T t) throws DataManipulateException {
         if (mongoRepository.findOne(Example.of(t)).isPresent()) {
             mongoRepository.delete(t);
+        } else {
+            throw new DataManipulateException();
         }
-        throw new DataManipulateException();
     }
 
     @Override
     public T update(T t) throws DataManipulateException {
         if (mongoRepository.findOne(Example.of(t)).isPresent()) {
             return mongoRepository.save(t);
+        } else {
+            throw new DataManipulateException();
         }
-        throw new DataManipulateException();
     }
 }

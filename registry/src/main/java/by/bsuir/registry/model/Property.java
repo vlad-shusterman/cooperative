@@ -26,6 +26,11 @@ public class Property {
     @Indexed(unique = true)
     private final String inventoryNumber;
 
+    // TODO: 12.03.2020
+    //  - Add apartment number property
+    //  - Add Certificate of state registration (number, registration date)
+    //  - Fix frontend
+
     @Field
     @NotNull
     private final double square;

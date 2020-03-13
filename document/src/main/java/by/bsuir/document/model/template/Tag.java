@@ -29,7 +29,7 @@ public enum Tag {
 
     // Property
     BOX_SQ(Collections.singletonList(PROPERTY_ID)), // Square
-    FIO(Collections.singletonList(PROPERTY_ID)), // Number
+    FIO(Collections.singletonList(PROPERTY_ID)), // Apartment number
     INV(Collections.singletonList(PROPERTY_ID)), // Inventory number
     DATE_REG(Collections.singletonList(PROPERTY_ID)), // Registration date
     NUM(Collections.singletonList(PROPERTY_ID)), // Number of Certificate of state registration
@@ -49,7 +49,7 @@ public enum Tag {
     INDEX(Collections.singletonList(Param.INDEX)), // Line entered by user
 
     // Vicarious authority
-    FAMILY_TO(Collections.singletonList(TO_PERSON_ID)), // Full name of
+    FAMILY_TO(Collections.singletonList(TO_PERSON_ID)), // Full name of delegate
     ATP(Arrays.asList(START_DATE, DURATION)), // Duration in words representation
     AN(Collections.singletonList(ID)), // Id in system
 
@@ -57,12 +57,19 @@ public enum Tag {
     EQS(Collections.singletonList(EQS_PARAM)), // Acceptance equipment list with names and nums
 
     // Registration sheet
-    LIST(Collections.singletonList(LIST_PARAM)), // List of registered proprietors with such data as ... todo Add data
+    LIST(Collections.singletonList(LIST_PARAM)), /* List of registered proprietors with such data as
+                                                     - Apartment number
+                                                     - Full name
+                                                     - Owning percent for current proprietor
+                                                     - Delegate (by vicarious authority)
+                                                     - Authority (number of document)
+                                                     - Participation (personally or delegate)
+                                                 */
 
     // Common
-    DAY(Collections.singletonList(DAY_PARAM)),
-    MONTH(Collections.singletonList(MONTH_PARAM)),
-    YEAR(Collections.singletonList(YEAR_PARAM)),
+    DAY(Collections.singletonList(DATE_PARAM)),
+    MONTH(Collections.singletonList(DATE_PARAM)),
+    YEAR(Collections.singletonList(DATE_PARAM)),
     DATE(Collections.singletonList(DATE_PARAM));
 
     private List<Param> params;
@@ -77,9 +84,6 @@ public enum Tag {
         INDEX,
         EQS_PARAM,
         LIST_PARAM,
-        DAY_PARAM,
-        MONTH_PARAM,
-        YEAR_PARAM,
         DATE_PARAM
     }
 }
