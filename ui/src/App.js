@@ -3,6 +3,7 @@ import {Route, Router} from 'react-router';
 import createBrowserHistory from './helpers/history';
 import './App.css';
 import {Register} from "./components/register/Register";
+import MailSender from "./components/notifications/components/MailSender";
 import {Organization} from "./components/requisites/Organization";
 import {Supervisor} from "./components/requisites/Supervisor";
 import {StateRegistrationOfLegal} from "./components/requisites/StateRegistrationOfLegal";
@@ -18,6 +19,7 @@ function App() {
             <Route exact path='/requisites/subjectHistory' component={SubjectHistory}/>
             <Route exact path='/requisites/subjectHistory/:id' component={SubjectHistoryEvent}/>
             <Route path='/register' component={Register}/>
+            <Route path='/notifications' component={MailSender}/>
         </Router>
     );
 }
