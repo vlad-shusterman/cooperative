@@ -4,6 +4,20 @@ spring:
       host: 127.0.0.1
       port: 27017
       database: cooperative
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    username: username@gmail.com
+    password: password
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    protocol: smtp
+    test-connection: false
 export:
   template:
     electric-info-template: classpath:template/electricTemplate.xlsx
