@@ -62,7 +62,6 @@ export default class MailSender extends React.Component {
                 <h2>Нотификации</h2>
                 <Form>
                     <h3>Отправить сообщение</h3>
-                    sryzhevich@spanning.com
                     <FormGroup>
                         <label htmlFor='receivers'>Эл.адрес получателя</label>
                         <Input
