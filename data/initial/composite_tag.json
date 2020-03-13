@@ -1,0 +1,46 @@
+[
+  {
+    "id": "BANK_VC",
+    "name": "Визитка банковская",
+    "tags": []
+  },
+  {
+    "id": "POST_VC",
+    "name": "Визитка почтовая",
+    "tags": []
+  },
+  {
+    "id": "CONTRACT_VC",
+    "name": "Визитка договора",
+    "tags": [
+      "ORG_NAME",
+      "ORG_MAIL_ADDR",
+      "ORG_ADDR",
+      "PAN",
+      "ORG_PAY_ACC",
+      "ORG_EMAIL"
+    ]
+  },
+  {
+    "id": "PROPRIETOR_VC",
+    "name": "Визитка собственника",
+    "tags": [
+      "FAMILY",
+      "PASP",
+      "PW",
+      "PD",
+      "PN",
+      "ADDRESS",
+      "PHONE",
+      "MAIL",
+      "NUM",
+      "DATE_REG",
+      "INV"
+    ]
+  },
+  {
+    "id": "PROPERTY_VC",
+    "name": "Визитка недвижимости",
+    "tags": []
+  }
+]

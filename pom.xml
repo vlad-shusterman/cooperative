@@ -14,7 +14,10 @@
         <module>rest</module>
         <module>notification</module>
         <module>registry</module>
+        <module>document</module>
         <module>energy-resource</module>
+        <module>core</module>
+        <module>contractor</module>
     </modules>
 
     <parent>

@@ -1,6 +1,7 @@
 package by.bsuir.registry.service.impl;
 
-import by.bsuir.registry.exceptions.DataManipulateException;
+import by.bsuir.core.exceptions.DataManipulateException;
+import by.bsuir.core.service.impl.BaseManagerImpl;
 import by.bsuir.registry.model.Property;
 import by.bsuir.registry.repository.PropertyRepository;
 import by.bsuir.registry.service.PropertyManager;

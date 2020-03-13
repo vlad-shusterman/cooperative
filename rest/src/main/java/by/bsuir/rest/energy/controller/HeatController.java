@@ -1,7 +1,6 @@
 package by.bsuir.rest.energy.controller;
 
 import by.bsuir.repository.HeatMeterRepository;
-import by.bsuir.rest.common.exception.EntityNotFoundException;
 import by.bsuir.rest.energy.mapper.HeatMeterMapper;
 import by.bsuir.rest.energy.model.HeatMeterDto;
 import io.swagger.annotations.Api;
@@ -33,14 +32,6 @@ public class HeatController {
         return new PageImpl<>(heatMeters);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<HeatMeterDto> getById(@PathVariable("id") String id) {
-        var heatMeter = heatMeterRepository.findById(id)
-                .map(heatMeterMapper::toDto)
-                .orElseThrow(EntityNotFoundException::new);
-        return ResponseEntity.ok(heatMeter);
-    }
-
     @PostMapping
     public ResponseEntity<HeatMeterDto> save(@RequestBody HeatMeterDto heatMeterDTO) {
         heatMeterDTO.setId(null);
@@ -50,19 +41,9 @@ public class HeatController {
         return ResponseEntity.ok(heatMeterMapper.toDto(savedHeatMeter));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<HeatMeterDto> update(@PathVariable("id") String id,
-                                               @RequestBody HeatMeterDto heatMeterDTO) {
-        heatMeterDTO.setId(id);
-        var entity = heatMeterMapper.fromDto(heatMeterDTO);
-        var updatedHeatMeter = heatMeterRepository.save(entity);
-
-        return ResponseEntity.ok(heatMeterMapper.toDto(updatedHeatMeter));
-    }
-
     @GetMapping("/person/{id}")
     public Page<HeatMeterDto> getByPersonId(@PageableDefault(size = 15) Pageable pageable,
-                                             @PathVariable("id") String id) {
+                                            @PathVariable("id") String id) {
         var heatMeter = heatMeterRepository.findAllByPersonId(id, pageable)
                 .stream()
                 .map(heatMeterMapper::toDto)

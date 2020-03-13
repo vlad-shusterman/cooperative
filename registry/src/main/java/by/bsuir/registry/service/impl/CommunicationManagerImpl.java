@@ -1,10 +1,11 @@
 package by.bsuir.registry.service.impl;
 
-import by.bsuir.registry.exceptions.DataManipulateException;
+import by.bsuir.core.exceptions.DataManipulateException;
+import by.bsuir.core.service.impl.BaseManagerImpl;
 import by.bsuir.registry.model.Communication;
 import by.bsuir.registry.model.Person;
 import by.bsuir.registry.repository.CommunicationRepository;
-import by.bsuir.registry.service.BaseManager;
+import by.bsuir.core.service.BaseManager;
 import by.bsuir.registry.service.CommunicationManager;
 import org.springframework.stereotype.Service;
 
