@@ -191,7 +191,7 @@ export const Register = () => {
   const renderOwnerModal = () => {
     return (
       <Modal isOpen={ownerModal} toggle={toggleOwnerModal}>
-        <ModalHeader toggle={togglePropertyModal}>Владелец</ModalHeader>
+        <ModalHeader toggle={toggleOwnerModal}>Владелец</ModalHeader>
         <ModalBody>
           <InputGroup>
             <Input placeholder="Имя" value={owner.name} onChange={e => {owner.name = e.target.value}}/>
