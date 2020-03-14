@@ -96,6 +96,7 @@ export const Register = () => {
         <tr>
           <th>Инвентарный номер</th>
           <th>Площадь</th>
+          <th>Номер помещения транспортного назначения</th>
         </tr>
         </thead>
         <tbody>
@@ -115,9 +116,9 @@ export const Register = () => {
           <th>Паспортные данные</th>
           <th>Моб. Телефон</th>
           <th>Домащний телефон</th>
-          <th>Почка</th>
+          <th>Почта</th>
           <th>Скайп</th>
-          <th>Выданные доверенности</th>
+          <th>Адрес</th>
         </tr>
         </thead>
         <tbody>
@@ -133,6 +134,7 @@ export const Register = () => {
       <tr>
         <td>{property.number}</td>
         <td>{property.square}</td>
+        <td>{property.ptn}</td>
       </tr>,
     )
   }
@@ -256,12 +258,14 @@ export const Register = () => {
         value.data.forEach(trust => {
           const from = persons.get(trust.proprietorId);
           const to = persons.get(trust.personId);
-          setTrusts([...trusts, {
-            from: `${from.surname} ${from.name} ${from.lastName}`,
-            to: `${to.surname} ${to.name} ${to.lastName}`,
-            startDate: new Date(trust.startDate * 1000).toISOString().substring(0, 10),
-            endDate: new Date(trust.startDate * 1000 + trust.duration * 24 * 60 * 60 * 1000).toISOString().substring(0, 10)
-          }]);
+          if (from && to) {
+            setTrusts([...trusts, {
+              from: `${from.surname} ${from.name} ${from.lastName}`,
+              to: `${to.surname} ${to.name} ${to.lastName}`,
+              startDate: new Date(trust.startDate * 1000).toISOString().substring(0, 10),
+              endDate: new Date(trust.startDate * 1000 + trust.duration * 24 * 60 * 60 * 1000).toISOString().substring(0, 10)
+            }]);
+          }
         })
       })
     })
@@ -273,6 +277,7 @@ export const Register = () => {
         return {
           number: `${property.inventoryNumber}`,
           square: property.square,
+          ptn: property.ptn,
           owners: property.owners,
           part: property.part,
           id: property.id,

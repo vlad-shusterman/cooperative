@@ -24,6 +24,7 @@ public class PersonEntity {
     @NotBlank
     private String documentType;
     private PassportData passportData;
+    private String livingAddress;
 
     public String getCommunications() {
         // HateOas isn't work with swagger......
