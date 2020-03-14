@@ -1,7 +1,6 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom'
 import './App.css';
-import {Requisites} from "./components/requisites/Requisities";
 import {Register} from "./components/register/Register";
 import 'bootstrap/dist/css/bootstrap.css';
 import CommonNavbar from './common/Navbar';
@@ -20,12 +19,12 @@ function App() {
     <BrowserRouter>
       <CommonNavbar/>
       <Switch>
-            <Route path='/requisites' component={Requisites}/>
             <Route path='/register' component={Register}/>
             <Route exact path='/' component={EnergyTableContainer}/>
             <Route exact path='/meters/new' component={NewMeter}/>
             <Route exact path='/meters/update' component={NewRecord}/>
     <Route exact path='/requisites/supervisor' component={Supervisor}/>
+    <Route exact path='/requisites' component={Organization}/>
     <Route exact path='/requisites/stateRegistrationOfLegal' component={StateRegistrationOfLegal}/>
     <Route exact path='/requisites/subjectHistory' component={SubjectHistory}/>
     <Route exact path='/requisites/subjectHistory/:id' component={SubjectHistoryEvent}/>

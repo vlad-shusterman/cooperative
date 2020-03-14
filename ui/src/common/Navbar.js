@@ -11,6 +11,7 @@ class CommonNavbar extends React.PureComponent {
             <Nav.Link href="/meters/new">Добавить</Nav.Link>
             <Nav.Link href="/register">Реестр</Nav.Link>
             <Nav.Link href="/requisites">Реквизиты</Nav.Link>
+            <Nav.Link href="/notifications">Рассылка</Nav.Link>
             </Nav>
         </Navbar>
     }
