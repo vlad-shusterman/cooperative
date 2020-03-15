@@ -221,7 +221,10 @@ export const Register = () => {
             <Input placeholder="Фамилия" value={owner.surname} onChange={e => {owner.surname= e.target.value}}/>
           </InputGroup>
           <InputGroup>
-            <Input placeholder="Last name" value={owner.lastName} onChange={e => {owner.lastName = e.target.value}}/>
+            <Input placeholder="Отчество" value={owner.lastName} onChange={e => {owner.lastName = e.target.value}}/>
+          </InputGroup>
+          <InputGroup>
+            <Input placeholder="Мобильный телефон" value={owner.mobilePhone} onChange={e => {owner.mobilePhone = e.target.value}}/>
           </InputGroup>
           <InputGroup>
             <Input placeholder="Номер паспорта" value={owner.passportData.number} onChange={e => {owner.passportData.number = e.target.value}}/>
@@ -245,12 +248,15 @@ export const Register = () => {
   }
 
   const addOwnersAction = (owner) => {
-    owner.documentType='passport';
-    PersonService.addPerson(owner).then(() => {
-      toggleOwnerModal();
-      updateOwners();
-      updatePersons();
-      setOwner({passportData:{}});
+    owner.documentType='паспорт гражданина РБ';
+    console.log(owner);
+    PersonService.addPerson(owner).then((ownerResponse) => {
+      RegisterService.addCommunications(ownerResponse.data.id, {personId: ownerResponse.data.id, communicationType: 'mobilePhone', communicationValue: owner.mobilePhone}).then(() => {
+        toggleOwnerModal();
+        updateOwners();
+        updatePersons();
+        setOwner({passportData:{}});
+      })
     })
   }
 

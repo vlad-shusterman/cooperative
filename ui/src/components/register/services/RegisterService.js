@@ -7,6 +7,9 @@ export default {
 
   fetchOwnerCommunications(personID) {
     return api().get(`communication/person/${personID}`)
-  }
+  },
 
+  addCommunications(personID, body) {
+    return api().post(`communication`, body)
+  }
 }
