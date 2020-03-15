@@ -6,13 +6,15 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Card,
   Button,
-  CardTitle,
-  CardText,
   Row,
+  Alert,
   Col,
+  CustomInput,
+  FormGroup,
+  Label
 } from 'reactstrap'
+
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 import classnames from 'classnames'
 import { InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap'
@@ -20,12 +22,14 @@ import RegisterService from './services/RegisterService'
 import PropertiesService from './services/PropertiesService'
 import TrustService from "./services/TrustService";
 import PersonService from "./services/PersonService";
+import UploadService from "./services/UploadService";
 
 export const Register = () => {
 
   const [property, setProperty] = useState({});
 
   const [ownersFilter, setOwnersFilter] = useState('')
+  const [propertiesFilter, setPropertiesFilter] = useState('')
   const [trustsFilter, setTrustsFilter] = useState('')
   const [owner, setOwner] = useState({passportData:{}});
   const [owners, setOwners] = useState([])
@@ -36,6 +40,8 @@ export const Register = () => {
   const [activeTab, setActiveTab] = useState('1')
   const [propertyModal, setPropertyModal] = useState(false)
   const [ownerModal, setOwnerModal] = useState(false)
+  const [visible, setVisible] = useState(false);
+  const [alertTextUploadService, setText] = useState('Файл не валидный.');
 
   const togglePropertyModal = () => setPropertyModal(!propertyModal)
   const toggleOwnerModal = () => setOwnerModal(!ownerModal)
@@ -92,62 +98,124 @@ export const Register = () => {
 
   const renderPropertyTable = () => {
     return (
-      <Table striped>
-        <thead>
-        <tr>
-          <th>Инвентарный номер</th>
-          <th>Площадь</th>
-          <th>Номер помещения транспортного назначения</th>
-        </tr>
-        </thead>
-        <tbody>
-        {renderPropertyTableData()}
-        </tbody>
-        <Button color="primary" onClick={togglePropertyModal}>Добавить недвижимость</Button>
-      </Table>
+        <div>
+          <InputGroup>
+            <Input placeholder="Фильтр" value={propertiesFilter} onChange={e => setPropertiesFilter(e.target.value)}/>
+          </InputGroup>
+          <Table striped>
+            <thead>
+            <tr>
+              <th>Инвентарный номер</th>
+              <th>Площадь</th>
+              <th>Номер помещения транспортного назначения</th>
+            </tr>
+            </thead>
+            <tbody>
+            {renderPropertyTableData()}
+            </tbody>
+            <Button color="primary" onClick={togglePropertyModal}>Добавить недвижимость</Button>
+          </Table>
+        </div>
     )
   }
 
   const renderOwnersTable = () => {
     return (
-      <Table striped>
-        <thead>
-        <tr>
-          <th>ФИО</th>
-          <th>Моб. Телефон</th>
-          <th>Паспортные данные</th>
-          <th>Паспортный номер</th>
-          <th>Кто выдал паспорт</th>
-        </tr>
-        </thead>
-        <tbody>
-        {renderOwnersTableData()}
-        </tbody>
-        <Button color="primary" onClick={toggleOwnerModal}>Добавить владельца</Button>
-      </Table>
+        <div>
+          <InputGroup>
+            <Input placeholder="Фильтр" value={ownersFilter} onChange={e => setOwnersFilter(e.target.value)}/>
+          </InputGroup>
+          <Table striped>
+            <thead>
+            <tr>
+              <th>ФИО</th>
+              <th>Моб. Телефон</th>
+              <th>Паспортные данные</th>
+              <th>Паспортный номер</th>
+              <th>Кто выдал паспорт</th>
+            </tr>
+            </thead>
+            <tbody>
+            {renderOwnersTableData()}
+            </tbody>
+            <Button color="primary" onClick={toggleOwnerModal}>Добавить владельца</Button>
+          </Table>
+        </div>
     )
   }
 
+  const renderUpload = () => {
+    return (
+        <div>
+          <Alert color="primary" isOpen={visible} toggle={()=> setVisible(false)} fade={false}>
+            {alertTextUploadService}
+          </Alert>
+          <FormGroup>
+            <Label for="exampleCustomFileBrowser">CSV реестр</Label>
+            <CustomInput type="file" id="registerBrowser" name="customFile" label="Выберите файл реестра."/>
+          </FormGroup>
+          <Button outline color="primary" onClick={() => upload()}>Обновить реестр</Button>
+        </div>
+    )
+  };
+
+  const upload = () => {
+    setText('Файл не валидный.');
+    setVisible(false);
+    const upload = document.getElementById("registerBrowser");
+    if (upload.files && upload.files.length === 1) {
+      const file = upload.files[0];
+      if (file.name.includes(".csv")) {
+        const promise = UploadService.uploadFile(file);
+        setText("Обработка...");
+        setVisible(true);
+        promise.then(() => {
+          updateOwners();
+          updatePersons();
+          updateProperties();
+          setVisible(false);
+          setText("Успешно загружено.");
+          setVisible(true);
+        });
+        promise.catch(() => {
+          setText("Произошла ошибка.");
+          setVisible(true);
+        });
+      } else {
+        setVisible(true);
+      }
+    } else {
+      setVisible(true);
+    }
+  };
+
   const renderPropertyTableData = () => {
-    return properties.map(property =>
-      <tr>
-        <td>{property.number}</td>
-        <td>{property.square}</td>
-        <td>{property.ptn}</td>
-      </tr>,
+    const filteredProperties = properties.length > 0 ? properties.filter(property => property.number.includes(propertiesFilter)
+        || (property.square + '').includes(propertiesFilter) || (property.ptn && property.ptn.includes(propertiesFilter))) : [];
+    return filteredProperties.map(property =>
+        <tr>
+          <td>{property.number}</td>
+          <td>{property.square}</td>
+          <td>{property.ptn}</td>
+        </tr>,
     )
   }
 
   const renderOwnersTableData = () => {
     if (owners.length > 0) {
-      return owners.map(owner =>
-        <tr>
-          <td>{owner ? owner.fio : ''}</td>
-          {<td>{owner.mobilePhone}</td>}
-          <td>{owner ? owner.passportData : ''}</td>
-          {<td>{owner.passportNumber}</td>}
-          {<td>{owner.issuingAuthority}</td>}
-        </tr>,
+      const filteredOwners = owners.length > 0 ? owners.filter(owner => (owner.fio && owner.fio.includes(ownersFilter))
+          || (owner.mobilePhone && owner.mobilePhone.includes(ownersFilter))
+          || (owner.passportNumber && owner.passportNumber.includes(ownersFilter))
+          || (owner.issuingAuthority && owner.issuingAuthority.includes(ownersFilter))
+          || (owner.passportData && owner.passportData.includes(ownersFilter))) : [];
+      return filteredOwners.map(owner =>
+          <tr>
+            <td>{owner ? owner.fio : ''}</td>
+            {<td>{owner.mobilePhone}</td>}
+            <td>{owner ? owner.passportData : ''}</td>
+            {<td>{owner.passportNumber}</td>}
+            {<td>{owner.issuingAuthority}</td>}
+          </tr>,
       )
     }
   }
@@ -376,6 +444,16 @@ export const Register = () => {
               Собственники
             </NavLink>
           </NavItem>
+          <NavItem>
+            <NavLink
+                className={classnames({ active: activeTab === '5' })}
+                onClick={() => {
+                  toggleTab('5')
+                }}
+            >
+              Загрузка из файла
+            </NavLink>
+          </NavItem>
         </Nav>
       </Col>
       <Col xs="9">
@@ -406,6 +484,9 @@ export const Register = () => {
           </TabPane>
           <TabPane tabId="4">
             {renderOwnersTable()}
+          </TabPane>
+          <TabPane tabId="5">
+            {renderUpload()}
           </TabPane>
         </TabContent>
       </Col>
