@@ -30,6 +30,7 @@ export const Register = () => {
   const [owner, setOwner] = useState({passportData:{}});
   const [owners, setOwners] = useState([])
   const [persons, setPersons] = useState(new Map());
+  const [person, setPerson] = useState('');
   const [trusts, setTrusts] = useState([])
   const [properties, setProperties] = useState([])
   const [activeTab, setActiveTab] = useState('1')
@@ -113,12 +114,10 @@ export const Register = () => {
         <thead>
         <tr>
           <th>ФИО</th>
-          <th>Паспортные данные</th>
           <th>Моб. Телефон</th>
-          <th>Домащний телефон</th>
-          <th>Почта</th>
-          <th>Скайп</th>
-          <th>Адрес</th>
+          <th>Паспортные данные</th>
+          <th>Паспортный номер</th>
+          <th>Кто выдал паспорт</th>
         </tr>
         </thead>
         <tbody>
@@ -144,12 +143,10 @@ export const Register = () => {
       return owners.map(owner =>
         <tr>
           <td>{owner ? owner.fio : ''}</td>
+          {<td>{owner.mobilePhone}</td>}
           <td>{owner ? owner.passportData : ''}</td>
-          {/*<td>{owner.mobilePhone}</td>*/}
-          {/*<td>{owner.homePhone}</td>*/}
-          {/*<td>{owner.email}</td>*/}
-          {/*<td>{owner.skype}</td>*/}
-          {/*<td>{owner.trusts}</td>*/}
+          {<td>{owner.passportNumber}</td>}
+          {<td>{owner.issuingAuthority}</td>}
         </tr>,
       )
     }
@@ -166,9 +163,23 @@ export const Register = () => {
           <InputGroup>
             <Input placeholder="Площадь" onChange={e => {property.square = e.target.value}} value={property.square}/>
           </InputGroup>
-          <InputGroup>
-            <Input placeholder="Passport data" onChange={e => {property.ownerPassportData = e.target.value}} value={property.passportData}/>
-          </InputGroup>
+          <form>
+            <div className="form-group row">
+              <div className="col-md-6">
+                <label htmlFor="type" className="col-sm-2 col-form-label">ФИО владельца</label>
+                <select className="form-control" id="type" onChange={(e) => addPerson(e)}>
+                  {Array.from(persons, ([key, person]) => {
+                    if (person) {
+                      return <option
+                        key={person.id}
+                        value={person.id}>
+                        {`${person.surname} ${person.name} ${person.lastName}`}</option>
+                    }
+                  })}
+                </select>
+              </div>
+            </div>
+          </form>
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={() => addPropertyAction(property)}>Добавить</Button>
@@ -178,15 +189,23 @@ export const Register = () => {
     )
   }
 
+  const addPerson = (e) => {
+    if (person) {
+      person.id = e.target.value;
+    } else {
+      setPerson({id: e.target.value})
+    }
+  }
+
   const addPropertyAction = (property) => {
-    // PersonService.fetchPersons().then((persons) => {
-    //   persons.map((person) => {
-    //     person.passportData.data === property.ownerPassportData
-    //   })
-    // })
+    property.owners = [{
+      personId: person.id || persons.entries().next().value[0],
+      owningPercent: 1
+    }]
     addProperty(property).then(() => {
       togglePropertyModal();
       updateProperties();
+      updateOwners();
     });
   }
 
@@ -208,13 +227,13 @@ export const Register = () => {
             <Input placeholder="Номер паспорта" value={owner.passportData.number} onChange={e => {owner.passportData.number = e.target.value}}/>
           </InputGroup>
           <InputGroup>
-            <Input placeholder="data" value={owner.passportData.data} onChange={e => {owner.passportData.data = e.target.value}}/>
+            <Input placeholder="Данные паспорта" value={owner.passportData.data} onChange={e => {owner.passportData.data = e.target.value}}/>
           </InputGroup>
           <InputGroup>
-            <Input placeholder="issuingAuthority" value={owner.passportData.issuingAuthority} onChange={e => {owner.passportData.issuingAuthority = e.target.value}}/>
+            <Input placeholder="Кто выдал паспорт" value={owner.passportData.issuingAuthority} onChange={e => {owner.passportData.issuingAuthority = e.target.value}}/>
           </InputGroup>
           <InputGroup>
-            <Input placeholder="personalNumber" value={owner.passportData.personalNumber} onChange={e => {owner.passportData.personalNumber = e.target.value}}/>
+            <Input placeholder="Персональный номер паспорта" value={owner.passportData.personalNumber} onChange={e => {owner.passportData.personalNumber = e.target.value}}/>
           </InputGroup>
         </ModalBody>
         <ModalFooter>
@@ -230,6 +249,8 @@ export const Register = () => {
     PersonService.addPerson(owner).then(() => {
       toggleOwnerModal();
       updateOwners();
+      updatePersons();
+      setOwner({passportData:{}});
     })
   }
 
@@ -238,12 +259,22 @@ export const Register = () => {
       value.data.forEach(owner => {
         RegisterService.fetchOwnerCommunications(owner.personEntity.id)
           .then((communications) => {
-            setOwners([...owners, {
-              fio: `${owner.personEntity.surname} ${owner.personEntity.name} ${owner.personEntity.lastName}`,
-              passportData: owner.personEntity.documentType === 'passport' ? owner.personEntity.passportData : '',
-              properties: owner.entities,
-              id: owner.personEntity.id,
-            }])
+            let communicationObject = {};
+            communications.data.forEach((communication) => {
+              communicationObject[communication.communicationType] = communication.communicationValue;
+            })
+            owners.push(
+              {
+                ...communicationObject,
+                fio: `${owner.personEntity.surname} ${owner.personEntity.name} ${owner.personEntity.lastName}`,
+                passportData: owner.personEntity.documentType === 'паспорт гражданина РБ' && owner.personEntity.passportData ? owner.personEntity.passportData.number : 'вид на жительство РБ',
+                properties: owner.entities,
+                issuingAuthority: owner.personEntity.documentType === 'паспорт гражданина РБ' && owner.personEntity.passportData ? owner.personEntity.passportData.issuingAuthority : '',
+                passportNumber: owner.personEntity.documentType === 'паспорт гражданина РБ' && owner.personEntity.passportData ? owner.personEntity.passportData.number : '',
+                id: owner.personEntity.id,
+              }
+            )
+            setOwners([...owners])
           })
       })
     })
